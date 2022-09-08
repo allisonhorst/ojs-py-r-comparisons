@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Allison Horst">
+
+<title>Data Wrangling Essentials in R, Python &amp; JavaScript</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="ojs-py-r-comparisons_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ojs-py-r-comparisons_files/libs/quarto-html/quarto.js"></script>
+<script src="ojs-py-r-comparisons_files/libs/quarto-html/popper.min.js"></script>
+<script src="ojs-py-r-comparisons_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ojs-py-r-comparisons_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ojs-py-r-comparisons_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ojs-py-r-comparisons_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ojs-py-r-comparisons_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ojs-py-r-comparisons_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ojs-py-r-comparisons_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script type="module" src="ojs-py-r-comparisons_files/libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="ojs-py-r-comparisons_files/libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+<script src="ojs-py-r-comparisons_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="ojs-py-r-comparisons_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Data Wrangling Essentials in R, Python &amp; JavaScript</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Allison Horst </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="welcome" class="level1">
+<h1>1. Welcome!</h1>
+<ul>
+<li>Multiple languages is useful &amp; marketable</li>
+<li>Different teams use different languages</li>
+<li>Data scientists need to be nimble &amp; adaptable</li>
+<li>Your prior knowledge can help you when learning something new</li>
+<li>Tools are being developed to lower barriers of adoption across languages</li>
+<li>Here, explore similarities (and differences) in methods between R, Python, and JavaScript</li>
+</ul>
+</section>
+<section id="set-up" class="level1">
+<h1>2. Set-up</h1>
+<p>If you’re following along, you’ll need to do a bit of set-up.</p>
+<section id="step-1-attach-the-libraries" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-attach-the-libraries">Step 1: Attach the libraries</h3>
+<p>This document is created in a Quarto document, where we can work in R, Python, <em>and</em> Observable JavaScript. If you’re working in a different place, make sure you’re working in the correct code block type. If you’re just trying out the JavaScript code, you may want to do it in an <a href="https://observablehq.com/">Observable Notebook</a>!</p>
+<p>Attach the <code>tidyverse</code>, which contains the <code>tidyr</code> and <code>dplyr</code> packages for data wrangling in R:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Attach <code>pandas</code> for data wrangling in Python:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Attach <code>Arquero</code> for data wrangling in JavaScript:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" data-startfrom="44" data-source-offset="9"><pre class="sourceCode java code-with-copy"><code class="sourceCode java" style="counter-reset: source-line 43;"><span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>```<span class="op">{</span>ojs<span class="op">}</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">{ aq, op } from '@uwdata/arquero'</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<!-- Note to self: add explanation of how things are imported. What are aq, op? -->
+</section>
+<section id="step-2-import-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-import-the-data">Step 2: Import the data</h3>
+<p>We’ll explore these comparisons using the <code>penguins</code> dataset. The first 5 lines of the data are shown below.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> species </th>
+   <th style="text-align:left;"> island </th>
+   <th style="text-align:right;"> bill_length_mm </th>
+   <th style="text-align:right;"> bill_depth_mm </th>
+   <th style="text-align:right;"> flipper_length_mm </th>
+   <th style="text-align:right;"> body_mass_g </th>
+   <th style="text-align:left;"> sex </th>
+   <th style="text-align:right;"> year </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Adelie </td>
+   <td style="text-align:left;"> Torgersen </td>
+   <td style="text-align:right;"> 39.1 </td>
+   <td style="text-align:right;"> 18.7 </td>
+   <td style="text-align:right;"> 181 </td>
+   <td style="text-align:right;"> 3750 </td>
+   <td style="text-align:left;"> male </td>
+   <td style="text-align:right;"> 2007 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Adelie </td>
+   <td style="text-align:left;"> Torgersen </td>
+   <td style="text-align:right;"> 39.5 </td>
+   <td style="text-align:right;"> 17.4 </td>
+   <td style="text-align:right;"> 186 </td>
+   <td style="text-align:right;"> 3800 </td>
+   <td style="text-align:left;"> female </td>
+   <td style="text-align:right;"> 2007 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Adelie </td>
+   <td style="text-align:left;"> Torgersen </td>
+   <td style="text-align:right;"> 40.3 </td>
+   <td style="text-align:right;"> 18.0 </td>
+   <td style="text-align:right;"> 195 </td>
+   <td style="text-align:right;"> 3250 </td>
+   <td style="text-align:left;"> female </td>
+   <td style="text-align:right;"> 2007 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Adelie </td>
+   <td style="text-align:left;"> Torgersen </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 2007 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Adelie </td>
+   <td style="text-align:left;"> Torgersen </td>
+   <td style="text-align:right;"> 36.7 </td>
+   <td style="text-align:right;"> 19.3 </td>
+   <td style="text-align:right;"> 193 </td>
+   <td style="text-align:right;"> 3450 </td>
+   <td style="text-align:left;"> female </td>
+   <td style="text-align:right;"> 2007 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>The <code>penguins</code> data contains 8 variables (columns): <em>species</em>, <em>island</em>, <em>bill_length_mm</em>, <em>bill_depth_mm</em>, <em>flipper_length_mm</em>, <em>body_mass_g</em>, and <em>year</em>. Learn more about the penguins data at the <a href="https://allisonhorst.github.io/palmerpenguins/">palmerpenguins R package website</a>.</p>
+<p>You can also find the <code>penguins</code> dataset in the <a href="https://pypi.org/project/palmerpenguins/"><code>palmerpenguins</code> Python library</a>, and as one of the existing datasets in Observable. For the sake of also seeing how we can import a local file, let’s do it! I have a file named <code>penguins.csv</code> in my working directory. I’ll read it in using <code>read_csv()</code> in R (from the <code>readr</code> package, part of the <code>tidyverse</code>). In each case, I’ll store the imported data as <code>penguins</code>.</p>
+<p><strong>Import a CSV file in R with <code>read_csv()</code> in the <code>readr</code> package:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>penguins_r <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'penguins.csv'</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Import a CSV file in Python with <code>read_csv()</code> in the <code>pandas</code> library:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>penguins_py <span class="op">=</span> pd.read_csv(<span class="st">'penguins.csv'</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Import a CSV file in JavaScript with <code>loadCSV()</code> in the <code>Arquero</code> library:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" data-startfrom="81" data-source-offset="9"><pre class="sourceCode java code-with-copy"><code class="sourceCode java" style="counter-reset: source-line 80;"><span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>```<span class="op">{</span>ojs<span class="op">}</span></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>penguins_js <span class="op">=</span> aq<span class="op">.</span><span class="fu">loadCSV</span><span class="op">(</span><span class="er">'</span>penguins<span class="op">.</span><span class="fu">csv</span><span class="er">'</span><span class="op">)</span></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-take-a-quick-look" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-take-a-quick-look">Step 3: Take a quick look!</h3>
+<p>Let’s make sure we’ve imported our data as expected.</p>
+<p><strong>Show the first 5 lines of <code>penguins</code> (R):</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>penguins_r <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">5</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 8
+  species island    bill_length_mm bill_depth_mm flipper_l…¹ body_…² sex    year
+  &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
+1 Adelie  Torgersen           39.1          18.7         181    3750 male   2007
+2 Adelie  Torgersen           39.5          17.4         186    3800 fema…  2007
+3 Adelie  Torgersen           40.3          18           195    3250 fema…  2007
+4 Adelie  Torgersen           NA            NA            NA      NA &lt;NA&gt;   2007
+5 Adelie  Torgersen           36.7          19.3         193    3450 fema…  2007
+# … with abbreviated variable names ¹​flipper_length_mm, ²​body_mass_g</code></pre>
+</div>
+</div>
+<p><em>Note:</em> What is that <code>|&gt;</code>? That’s the <em>native pipe operator</em> in R, used to chain sequences of functions together. You will also see the <code>magrittr</code> pipe (<code>%&gt;%</code>) in R code, which serves the same function.</p>
+<p><strong>Show the first 5 lines of <code>penguins</code> (Python):</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>penguins_py.head(<span class="dv">5</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  species     island  bill_length_mm  ...  body_mass_g     sex  year
+0  Adelie  Torgersen            39.1  ...       3750.0    male  2007
+1  Adelie  Torgersen            39.5  ...       3800.0  female  2007
+2  Adelie  Torgersen            40.3  ...       3250.0  female  2007
+3  Adelie  Torgersen             NaN  ...          NaN     NaN  2007
+4  Adelie  Torgersen            36.7  ...       3450.0  female  2007
+
+[5 rows x 8 columns]</code></pre>
+</div>
+</div>
+<p><strong>Show the first 5 lines of <code>penguins</code> (JavaScript):</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" data-startfrom="105" data-source-offset="9"><pre class="sourceCode java code-with-copy"><code class="sourceCode java" style="counter-reset: source-line 104;"><span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a>```<span class="op">{</span>ojs<span class="op">}</span></span>
+<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a>penguins_js<span class="op">.</span><span class="fu">view</span><span class="op">(</span><span class="dv">5</span><span class="op">)</span></span>
+<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>Now that we have our data ready to rumble (or maybe waddle), let’s wrangle some penguins!</p>
+</section>
+</section>
+<section id="data-wrangling-essentials-in-r-python-javascript" class="level1">
+<h1>2. Data wrangling essentials in R, Python &amp; JavaScript</h1>
+<p>Here, we’ll compare several data wrangling essentials in R (using functions in the <code>dplyr</code> and <code>tidyr</code> packages), Python (using the <code>Pandas</code> library), and JavaScript (using the <code>Arquero</code> library). There are <strong>many</strong> other libraries useful for data wrangling in all three languages. This is a starting point to get you moving.</p>
+<p>Methods comparisons are shown for:</p>
+<ol type="1">
+<li>Filtering observations: Keeping or excluding <strong>rows</strong> based on our conditions</li>
+<li>Selecting: Keeping or excluding <strong>columns</strong> based on our conditions</li>
+<li>Spreading columns (long-to-wide transformation)</li>
+<li>Gathering columns (wide-to-long transformation)</li>
+<li>Adding a new column</li>
+<li>Find aggregated summary information by groups</li>
+</ol>
+<section id="a.-filtering-observations-keep-or-exclude-rows-based-on-our-condition" class="level2">
+<h2 class="anchored" data-anchor-id="a.-filtering-observations-keep-or-exclude-rows-based-on-our-condition">a. Filtering observations: keep or exclude <strong>rows</strong> based on our condition</h2>
+<table class="table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 15%">
+<col style="width: 26%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Package</th>
+<th>Function / method</th>
+<th>General structure</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>R</strong></td>
+<td><code>dplyr</code></td>
+<td><code>filter()</code></td>
+<td><code>filter(df, condition)</code></td>
+</tr>
+<tr class="even">
+<td><strong>Python</strong></td>
+<td><code>Pandas</code></td>
+<td><code>query()</code></td>
+<td><code>df.query(condition)</code></td>
+</tr>
+<tr class="odd">
+<td><strong>JavaScript</strong></td>
+<td><code>Arquero</code></td>
+<td><code>filter()</code></td>
+<td><code>df.filter(condition)</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example 1.</strong> Only keep observations from <code>penguins</code> where the species is “Chinstrap.”</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins_r, species <span class="sc">==</span> <span class="st">"Chinstrap"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 68 × 8
+   species   island bill_length_mm bill_depth_mm flipper_l…¹ body_…² sex    year
+   &lt;chr&gt;     &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
+ 1 Chinstrap Dream            46.5          17.9         192    3500 fema…  2007
+ 2 Chinstrap Dream            50            19.5         196    3900 male   2007
+ 3 Chinstrap Dream            51.3          19.2         193    3650 male   2007
+ 4 Chinstrap Dream            45.4          18.7         188    3525 fema…  2007
+ 5 Chinstrap Dream            52.7          19.8         197    3725 male   2007
+ 6 Chinstrap Dream            45.2          17.8         198    3950 fema…  2007
+ 7 Chinstrap Dream            46.1          18.2         178    3250 fema…  2007
+ 8 Chinstrap Dream            51.3          18.2         197    3750 male   2007
+ 9 Chinstrap Dream            46            18.9         195    4150 fema…  2007
+10 Chinstrap Dream            51.3          19.9         198    3700 male   2007
+# … with 58 more rows, and abbreviated variable names ¹​flipper_length_mm,
+#   ²​body_mass_g</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>penguins_py.query(<span class="st">'species == "Chinstrap"'</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       species island  bill_length_mm  ...  body_mass_g     sex  year
+276  Chinstrap  Dream            46.5  ...       3500.0  female  2007
+277  Chinstrap  Dream            50.0  ...       3900.0    male  2007
+278  Chinstrap  Dream            51.3  ...       3650.0    male  2007
+279  Chinstrap  Dream            45.4  ...       3525.0  female  2007
+280  Chinstrap  Dream            52.7  ...       3725.0    male  2007
+..         ...    ...             ...  ...          ...     ...   ...
+339  Chinstrap  Dream            55.8  ...       4000.0    male  2009
+340  Chinstrap  Dream            43.5  ...       3400.0  female  2009
+341  Chinstrap  Dream            49.6  ...       3775.0    male  2009
+342  Chinstrap  Dream            50.8  ...       4100.0    male  2009
+343  Chinstrap  Dream            50.2  ...       3775.0  female  2009
+
+[68 rows x 8 columns]</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16" data-startfrom="142" data-source-offset="9"><pre class="sourceCode java code-with-copy"><code class="sourceCode java" style="counter-reset: source-line 141;"><span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a>```<span class="op">{</span>ojs<span class="op">}</span></span>
+<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a>penguins_js<span class="op">.</span><span class="fu">filter</span><span class="op">(</span>d <span class="op">=&gt;</span> d<span class="op">.</span><span class="fu">species</span> <span class="op">==</span> <span class="st">"Chinstrap"</span><span class="op">)</span></span>
+<span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>The first 5 rows of the resulting dataset contain:</p>
+<p>```</p>
+</section>
+<section id="example-2-only-keep-rows-from-penguins-where-the-species-is-gentoo-and-the-body-mass-is-greater-than-5800-grams." class="level2">
+<h2 class="anchored" data-anchor-id="example-2-only-keep-rows-from-penguins-where-the-species-is-gentoo-and-the-body-mass-is-greater-than-5800-grams.">Example 2: Only keep rows from penguins where the species is “Gentoo” <em>and</em> the body mass is greater than 5800 grams.</h2>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script type="ojs-module-contents">
+{"contents":[{"methodName":"interpret","cellName":"ojs-cell-1","inline":false,"source":"import { aq, op } from '@uwdata/arquero'\n"},{"methodName":"interpret","cellName":"ojs-cell-2","inline":false,"source":"penguins_js = aq.loadCSV('penguins.csv')\n"},{"methodName":"interpret","cellName":"ojs-cell-3","inline":false,"source":"penguins_js.view(5)\n"},{"methodName":"interpret","cellName":"ojs-cell-4","inline":false,"source":"penguins_js.filter(d => d.species == \"Chinstrap\")\n"}]}
+</script>
+<script type="module">
+window._ojs.paths.runtimeToDoc = "../../..";
+window._ojs.paths.runtimeToRoot = "../../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

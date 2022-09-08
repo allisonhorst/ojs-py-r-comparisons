@@ -1,0 +1,150 @@
+---
+title: "Data Wrangling Essentials in R, Python & JavaScript"
+author: "Allison Horst"
+format: html
+editor: visual
+execute: 
+  message: false
+  warning: false
+  echo: fenced
+  # output: false
+---
+
+# 1. Welcome!
+
+-   Multiple languages is useful & marketable
+-   Different teams use different languages
+-   Data scientists need to be nimble & adaptable
+-   Your prior knowledge can help you when learning something new
+-   Tools are being developed to lower barriers of adoption across languages
+-   Here, explore similarities (and differences) in methods between R, Python, and JavaScript
+
+# 2. Set-up
+
+If you're following along, you'll need to do a bit of set-up.
+
+### Step 1: Attach the libraries
+
+This document is created in a Quarto document, where we can work in R, Python, *and* Observable JavaScript. If you're working in a different place, make sure you're working in the correct code block type. If you're just trying out the JavaScript code, you may want to do it in an [Observable Notebook](https://observablehq.com/)!
+
+Attach the `tidyverse`, which contains the `tidyr` and `dplyr` packages for data wrangling in R:
+
+```{r}
+library(tidyverse)
+```
+
+Attach `pandas` for data wrangling in Python:
+
+```{python}
+import pandas as pd
+```
+
+Attach `Arquero` for data wrangling in JavaScript:
+
+```{ojs}
+import { aq, op } from '@uwdata/arquero'
+```
+
+<!-- Note to self: add explanation of how things are imported. What are aq, op? -->
+
+### Step 2: Import the data
+
+We'll explore these comparisons using the `penguins` dataset. The first 5 lines of the data are shown below.
+
+```{r, echo = FALSE}
+library(palmerpenguins)
+library(kableExtra)
+penguins |> 
+  head(5) |> 
+  kable() |>
+  kable_styling() 
+```
+
+The `penguins` data contains 8 variables (columns): *species*, *island*, *bill_length_mm*, *bill_depth_mm*, *flipper_length_mm*, *body_mass_g*, and *year*. Learn more about the penguins data at the [palmerpenguins R package website](https://allisonhorst.github.io/palmerpenguins/).
+
+You can also find the `penguins` dataset in the [`palmerpenguins` Python library](https://pypi.org/project/palmerpenguins/), and as one of the existing datasets in Observable. For the sake of also seeing how we can import a local file, let's do it! I have a file named `penguins.csv` in my working directory. I'll read it in using `read_csv()` in R (from the `readr` package, part of the `tidyverse`). In each case, I'll store the imported data as `penguins`.
+
+**Import a CSV file in R with `read_csv()` in the `readr` package:**
+
+```{r}
+penguins_r <- read_csv('penguins.csv')
+```
+
+**Import a CSV file in Python with `read_csv()` in the `pandas` library:**
+
+```{python}
+penguins_py = pd.read_csv('penguins.csv')
+```
+
+**Import a CSV file in JavaScript with `loadCSV()` in the `Arquero` library:**
+
+```{ojs}
+penguins_js = aq.loadCSV('penguins.csv')
+```
+
+### Step 3: Take a quick look!
+
+Let's make sure we've imported our data as expected.
+
+**Show the first 5 lines of `penguins` (R):**
+
+```{r}
+penguins_r |> head(5)
+```
+
+*Note:* What is that `|>`? That's the *native pipe operator* in R, used to chain sequences of functions together. You will also see the `magrittr` pipe (`%>%`) in R code, which serves the same function.
+
+**Show the first 5 lines of `penguins` (Python):**
+
+```{python}
+penguins_py.head(5)
+```
+
+**Show the first 5 lines of `penguins` (JavaScript):**
+
+```{ojs}
+penguins_js.view(5)
+```
+
+Now that we have our data ready to rumble (or maybe waddle), let's wrangle some penguins!
+
+# 2. Data wrangling essentials in R, Python & JavaScript
+
+Here, we'll compare several data wrangling essentials in R (using functions in the `dplyr` and `tidyr` packages), Python (using the `Pandas` library), and JavaScript (using the `Arquero` library). There are **many** other libraries useful for data wrangling in all three languages. This is a starting point to get you moving.
+
+Methods comparisons are shown for:
+
+1.  Filtering observations: Keeping or excluding **rows** based on our conditions
+2.  Selecting: Keeping or excluding **columns** based on our conditions
+3.  Spreading columns (long-to-wide transformation)
+4.  Gathering columns (wide-to-long transformation)
+5.  Adding a new column
+6.  Find aggregated summary information by groups
+
+## a. Filtering observations: keep or exclude **rows** based on our condition
+
+|                | Package   | Function / method | General structure       |
+|----------------|-----------|-------------------|-------------------------|
+| **R**          | `dplyr`   | `filter()`        | `filter(df, condition)` |
+| **Python**     | `Pandas`  | `query()`         | `df.query(condition)`   |
+| **JavaScript** | `Arquero` | `filter()`        | `df.filter(condition)`  |
+
+**Example 1.** Only keep observations from `penguins` where the species is "Chinstrap."
+
+```{r}
+filter(penguins_r, species == "Chinstrap")
+```
+
+```{python}
+penguins_py.query('species == "Chinstrap"')
+```
+
+```{ojs}
+penguins_js.filter(d => d.species == "Chinstrap")
+```
+
+The first 5 rows of the resulting dataset contain:
+
+\`\`\`
+
+## Example 2: Only keep rows from penguins where the species is "Gentoo" *and* the body mass is greater than 5800 grams.
